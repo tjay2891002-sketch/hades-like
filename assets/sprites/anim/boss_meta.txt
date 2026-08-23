@@ -1,0 +1,16 @@
+Boss（米诺陶）— Animated Minotaur（作者 Calciumtrice，CC-BY 3.0，需署名）
+来源页: https://opengameart.org/content/animated-minotaur
+原始图: Downloads\minotaur_spritesheet_calciumtrice.png（480×240，48×48/格，10列×5行）
+
+帧规格:
+- 原始单帧 48×48（不是 32×32！）
+- 已逐帧居中贴到 64×64 透明画布上，像素 1:1 未缩放 → 直接以 64×64 显示即为 Boss 尺寸
+- 如想更大: NEAREST 2× → 128×128；不建议 48→64 重采样（非整数倍会糊）
+- 朝向: 侧视图朝右；向左用 flip_h 镜像
+
+动画:
+- boss_idle_0..3.png    第0行  4帧
+- boss_run_0..3.png     第1行  4帧
+- boss_attack_0..3.png  第3行  4帧（链鞭挥击，弧光特效已画在帧内）
+
+建议帧率: idle 5 fps，run 8 fps，attack 8 fps。

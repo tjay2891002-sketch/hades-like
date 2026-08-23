@@ -1,0 +1,14 @@
+远程法师 — Mage（作者 Calciumtrice，CC-BY 3.0，需署名）
+来源页: https://opengameart.org/content/mage
+原始图: Downloads\mage_spritesheet_calciumtrice.png（320×160，32×32/格，10列×5行）
+
+帧规格:
+- 单帧 32×32 原始尺寸，未缩放；游戏内显示 32×32 直接用
+- 朝向: 侧视图朝右；向左用 flip_h 镜像
+
+动画:
+- enemy_shooter_idle_0..3.png    第0行  4帧
+- enemy_shooter_run_0..3.png     第2行  4帧
+- enemy_shooter_attack_0..3.png  第1行  4帧（施法，带闪光粒子，适合施法前摇）
+
+建议帧率: idle 6 fps，run 10 fps，attack 8 fps（施法动作放慢更有读条感）。

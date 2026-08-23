@@ -1,0 +1,17 @@
+重装大型（兽人持矛）— Animated Orcs（作者 Calciumtrice，CC-BY 3.0，需署名）
+来源页: https://opengameart.org/content/animated-orcs
+原始图: Downloads\orc_spritesheet_calciumtrice.png（320×320，32×32/格，10列×10行）
+
+帧规格:
+- 单帧 32×32 原始尺寸，未缩放
+- 体型大于其他 32×32 怪（兽人高约 24px，哥布林约 18px），同尺寸显示也显壮；
+  如想更"大型"可 NEAREST 1.5× → 48×48 显示（整数倍干净）
+- 朝向: 侧视图朝右；向左用 flip_h 镜像
+- 取持矛兽人变体（表内 0–4 行；5–9 行为兜帽变体，可作精英）
+
+动画:
+- enemy_tank_idle_0..3.png    第0行  4帧
+- enemy_tank_run_0..3.png     第1行  4帧
+- enemy_tank_attack_0..3.png  第3行  4帧（长矛突刺，攻击距离视觉上较长）
+
+建议帧率: idle 5 fps，run 8 fps（重装偏慢），attack 8 fps。

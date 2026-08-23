@@ -1,0 +1,167 @@
+[gd_scene format=3 uid="uid://yr7w5vf57e6"]
+
+[ext_resource type="Script" uid="uid://du40qbd428sku" path="res://player.gd" id="1_player"]
+[ext_resource type="Script" uid="uid://xwldwa04ij3q" path="res://hud.gd" id="3_hud"]
+[ext_resource type="Script" path="res://room_director.gd" id="4_room"]
+[ext_resource type="Script" path="res://room.gd" id="5_room"]
+[ext_resource type="Script" path="res://boon_select_ui.gd" id="6_boonui"]
+[ext_resource type="Script" path="res://shop_ui.gd" id="7_shopui"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/player.png" id="2_playertex"]
+[ext_resource type="Texture2D" path="res://assets/sprites/tiles/floor.png" id="8_floortex"]
+[ext_resource type="Texture2D" path="res://assets/sprites/tiles/column.png" id="9_columntex"]
+
+[sub_resource type="RectangleShape2D" id="rect_player_col"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="rect_pillar_col"]
+size = Vector2(40, 40)
+
+[node name="World" type="Node2D" unique_id=274503124]
+
+[node name="Background" type="Node2D" parent="." unique_id=247544807]
+
+[node name="Floor" type="TextureRect" parent="Background" unique_id=645938019]
+modulate = Color(0.3, 0.32, 0.44, 1)
+texture_filter = 1
+mouse_filter = 2
+offset_left = -2000.0
+offset_top = -2000.0
+offset_right = 2000.0
+offset_bottom = 2000.0
+stretch_mode = 1
+texture = ExtResource("8_floortex")
+
+[node name="Pillar1" type="Sprite2D" parent="Background" unique_id=523343255]
+modulate = Color(0.82, 0.82, 0.88, 1)
+texture_filter = 1
+position = Vector2(200, 90)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("9_columntex")
+
+[node name="Pillar2" type="Sprite2D" parent="Background" unique_id=308517094]
+modulate = Color(0.82, 0.82, 0.88, 1)
+texture_filter = 1
+position = Vector2(760, 90)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("9_columntex")
+
+[node name="Pillar3" type="Sprite2D" parent="Background" unique_id=513431073]
+modulate = Color(0.82, 0.82, 0.88, 1)
+texture_filter = 1
+position = Vector2(200, 450)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("9_columntex")
+
+[node name="Pillar4" type="Sprite2D" parent="Background" unique_id=674138020]
+modulate = Color(0.82, 0.82, 0.88, 1)
+texture_filter = 1
+position = Vector2(760, 450)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("9_columntex")
+
+[node name="Pillar5" type="Sprite2D" parent="Background" unique_id=277524583]
+modulate = Color(0.82, 0.82, 0.88, 1)
+texture_filter = 1
+position = Vector2(0, -360)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("9_columntex")
+
+[node name="Pillar6" type="Sprite2D" parent="Background" unique_id=25297949]
+modulate = Color(0.82, 0.82, 0.88, 1)
+texture_filter = 1
+position = Vector2(0, 360)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("9_columntex")
+
+[node name="Pillar7" type="Sprite2D" parent="Background" unique_id=246618871]
+modulate = Color(0.82, 0.82, 0.88, 1)
+texture_filter = 1
+position = Vector2(-480, 0)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("9_columntex")
+
+; 场内四根柱子的碰撞体（入 wall 组：挡移动 + 挡隔墙攻击 + 挡弹幕），与 Pillar1-4 视觉对齐。
+; Pillar5-8 在墙线上作为墙体装饰，墙本身已有碰撞，无需重复。
+[node name="PillarBody1" type="StaticBody2D" parent="Background" groups=["wall"]]
+position = Vector2(200, 90)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/PillarBody1"]
+shape = SubResource("rect_pillar_col")
+
+[node name="PillarBody2" type="StaticBody2D" parent="Background" groups=["wall"]]
+position = Vector2(760, 90)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/PillarBody2"]
+shape = SubResource("rect_pillar_col")
+
+[node name="PillarBody3" type="StaticBody2D" parent="Background" groups=["wall"]]
+position = Vector2(200, 450)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/PillarBody3"]
+shape = SubResource("rect_pillar_col")
+
+[node name="PillarBody4" type="StaticBody2D" parent="Background" groups=["wall"]]
+position = Vector2(760, 450)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Background/PillarBody4"]
+shape = SubResource("rect_pillar_col")
+
+[node name="Room" type="Node2D" parent="."]
+position = Vector2(480, 270)
+script = ExtResource("5_room")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=544801330]
+position = Vector2(480, 500)
+script = ExtResource("1_player")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="Player" unique_id=1218663250]
+texture_filter = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=888888888]
+shape = SubResource("rect_player_col")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1792479373]
+
+; 敌人不再静态摆放：房间 1 也走 RoomSpec 动态生成（room.gd _spawn_initial_wave），
+; 与换房同一条链路，从 Boss 房返回后房间内容与 RunState.room_index 保持一致。
+[node name="RoomDirector" type="Node" parent="."]
+script = ExtResource("4_room")
+
+[node name="Hud" type="CanvasLayer" parent="." unique_id=1409750206]
+script = ExtResource("3_hud")
+
+[node name="BoonSelectUI" type="CanvasLayer" parent="."]
+layer = 2
+script = ExtResource("6_boonui")
+
+[node name="ShopUI" type="CanvasLayer" parent="."]
+layer = 3
+script = ExtResource("7_shopui")
+
+[node name="HealthBar" type="Control" parent="Hud" unique_id=904047266]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="Back" type="ColorRect" parent="Hud/HealthBar" unique_id=565363458]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 20.0
+color = Color(0.25, 0.08, 0.08, 1)
+
+[node name="Fill" type="ColorRect" parent="Hud/HealthBar" unique_id=1017770838]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 20.0
+color = Color(0.9, 0.2, 0.2, 1)
+
+[node name="Label" type="Label" parent="Hud/HealthBar" unique_id=2090755649]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 1.0
+offset_right = 200.0
+offset_bottom = 20.0
+text = "HP"

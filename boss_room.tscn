@@ -1,0 +1,180 @@
+[gd_scene load_steps=16 format=3]
+
+[ext_resource type="Script" path="res://player.gd" id="1_player"]
+[ext_resource type="Script" path="res://hud.gd" id="3_hud"]
+[ext_resource type="Script" path="res://boon_select_ui.gd" id="6_boonui"]
+[ext_resource type="Script" path="res://boss.gd" id="7_boss"]
+[ext_resource type="Script" path="res://boss_exit.gd" id="8_exit"]
+[ext_resource type="Texture2D" path="res://assets/sprites/characters/player.png" id="2_playertex"]
+[ext_resource type="Texture2D" path="res://assets/sprites/tiles/floor.png" id="9_floortex"]
+[ext_resource type="Texture2D" path="res://assets/sprites/tiles/wall.png" id="10_walltex"]
+
+[sub_resource type="RectangleShape2D" id="rect_player_col"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="rect_wall_h"]
+size = Vector2(1000, 20)
+
+[sub_resource type="RectangleShape2D" id="rect_wall_v"]
+size = Vector2(20, 580)
+
+[sub_resource type="RectangleShape2D" id="rect_wall_top_seg"]
+size = Vector2(480, 20)
+
+[node name="World" type="Node2D"]
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Floor" type="TextureRect" parent="Background"]
+modulate = Color(0.3, 0.32, 0.44, 1)
+texture_filter = 1
+mouse_filter = 2
+offset_left = -2000.0
+offset_top = -2000.0
+offset_right = 2000.0
+offset_bottom = 2000.0
+stretch_mode = 1
+texture = ExtResource("9_floortex")
+
+[node name="Walls" type="Node2D" parent="."]
+
+; 顶墙拆成两段，中间留 80px 门洞给 BossExit（唯一出口）
+[node name="TopLeft" type="StaticBody2D" parent="Walls" groups=["wall"]]
+position = Vector2(-260, -270)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopLeft"]
+shape = SubResource("rect_wall_top_seg")
+
+[node name="ColorRect" type="TextureRect" parent="Walls/TopLeft"]
+modulate = Color(0.6, 0.6, 0.7, 1)
+texture_filter = 1
+mouse_filter = 2
+offset_left = -240.0
+offset_top = -10.0
+offset_right = 240.0
+offset_bottom = 10.0
+stretch_mode = 1
+texture = ExtResource("10_walltex")
+
+[node name="TopRight" type="StaticBody2D" parent="Walls" groups=["wall"]]
+position = Vector2(260, -270)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopRight"]
+shape = SubResource("rect_wall_top_seg")
+
+[node name="ColorRect" type="TextureRect" parent="Walls/TopRight"]
+modulate = Color(0.6, 0.6, 0.7, 1)
+texture_filter = 1
+mouse_filter = 2
+offset_left = -240.0
+offset_top = -10.0
+offset_right = 240.0
+offset_bottom = 10.0
+stretch_mode = 1
+texture = ExtResource("10_walltex")
+
+[node name="Bottom" type="StaticBody2D" parent="Walls" groups=["wall"]]
+position = Vector2(0, 270)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Bottom"]
+shape = SubResource("rect_wall_h")
+
+[node name="ColorRect" type="TextureRect" parent="Walls/Bottom"]
+modulate = Color(0.6, 0.6, 0.7, 1)
+texture_filter = 1
+mouse_filter = 2
+offset_left = -500.0
+offset_top = -10.0
+offset_right = 500.0
+offset_bottom = 10.0
+stretch_mode = 1
+texture = ExtResource("10_walltex")
+
+[node name="Left" type="StaticBody2D" parent="Walls" groups=["wall"]]
+position = Vector2(-480, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Left"]
+shape = SubResource("rect_wall_v")
+
+[node name="ColorRect" type="TextureRect" parent="Walls/Left"]
+modulate = Color(0.6, 0.6, 0.7, 1)
+texture_filter = 1
+mouse_filter = 2
+offset_left = -10.0
+offset_top = -290.0
+offset_right = 10.0
+offset_bottom = 290.0
+stretch_mode = 1
+texture = ExtResource("10_walltex")
+
+[node name="Right" type="StaticBody2D" parent="Walls" groups=["wall"]]
+position = Vector2(480, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/Right"]
+shape = SubResource("rect_wall_v")
+
+[node name="ColorRect" type="TextureRect" parent="Walls/Right"]
+modulate = Color(0.6, 0.6, 0.7, 1)
+texture_filter = 1
+mouse_filter = 2
+offset_left = -10.0
+offset_top = -290.0
+offset_right = 10.0
+offset_bottom = 290.0
+stretch_mode = 1
+texture = ExtResource("10_walltex")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(0, 150)
+script = ExtResource("1_player")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="Player"]
+texture_filter = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+shape = SubResource("rect_player_col")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+
+[node name="Boss" type="CharacterBody2D" parent="."]
+position = Vector2(0, -80)
+script = ExtResource("7_boss")
+
+[node name="BossExit" type="Area2D" parent="."]
+position = Vector2(0, -270)
+script = ExtResource("8_exit")
+
+[node name="Hud" type="CanvasLayer" parent="."]
+script = ExtResource("3_hud")
+
+[node name="HealthBar" type="Control" parent="Hud"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 20.0
+
+[node name="Back" type="ColorRect" parent="Hud/HealthBar"]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 20.0
+color = Color(0.25, 0.08, 0.08, 1)
+
+[node name="Fill" type="ColorRect" parent="Hud/HealthBar"]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 20.0
+color = Color(0.9, 0.2, 0.2, 1)
+
+[node name="Label" type="Label" parent="Hud/HealthBar"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 1.0
+offset_right = 200.0
+offset_bottom = 20.0
+text = "HP"
+
+[node name="BoonSelectUI" type="CanvasLayer" parent="."]
+layer = 2
+script = ExtResource("6_boonui")

@@ -1,0 +1,15 @@
+冲撞野兽（史莱姆）— Animated Slime（作者 Calciumtrice，CC-BY 3.0，需署名）
+来源页: https://opengameart.org/content/animated-slime
+原始图: Downloads\slime_spritesheet_calciumtrice.png（320×640，32×32/格，10列×20行）
+
+帧规格:
+- 单帧 32×32 原始尺寸，未缩放；游戏内显示 32×32 直接用
+- 朝向: 基本无方向性（圆团），任意朝向通用
+- 取绿色变体（表内 0–4 行；5–9 蓝、10–14 红、15–19 黄，可作变体/精英）
+
+动画:
+- enemy_charger_idle_0..3.png    第0行  4帧（原地弹跳）
+- enemy_charger_run_0..3.png     第2行  4帧（压扁-拉伸跳跃，冲撞感强）
+- enemy_charger_attack_0..3.png  第3行  4帧（扑击带粒子）
+
+建议帧率: idle 6 fps，run 8 fps，attack 10 fps。

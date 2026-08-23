@@ -1,0 +1,22 @@
+玩家战士 — 4 Direction Animated Warrior（作者 Calciumtrice，CC-BY 4.0）
+来源页: https://opengameart.org/content/4-direction-animated-warrior
+原始图: Downloads\warrior_spritesheet.png（896×1600，64×64/格，14列×25行）
+行布局由官方标注图 warrior_labelled_reference.png 核实（同目录 Downloads）。
+
+帧规格:
+- 单帧 32×32（原格 64×64 经 NEAREST 0.5× 缩小，像素干净整除）
+- 已按行拆为 4 方向 idle/run；游戏内显示尺寸 32×32，无需再缩放
+
+朝向布局（front=朝下, back=朝上）:
+- player_idle_down_0..11.png   第7行 IDLE-FRONT-SWORD   12帧
+- player_run_down_0..7.png     第9行 MOVE-FRONT-SWORD   8帧
+- player_idle_up_0..11.png     第19行 IDLE-BACK-SWORD   12帧
+- player_run_up_0..7.png       第21行 MOVE-BACK-SWORD   8帧
+- player_idle_left_0..11.png   第13行 IDLE-LEFT-SWORD   12帧
+- player_run_left_0..7.png     第15行 MOVE-LEFT-SWORD   8帧
+- player_idle_right_0..11.png  第1行 IDLE-RIGHT-SWORD   12帧
+- player_run_right_0..7.png    第3行 MOVE-RIGHT-SWORD   8帧
+
+未提取（原表还有，需要时可补）: 每方向 ATTACK/ATTACK-DASH（行 5/11/17/23）、UNARMED 版本、DEATH（第24行）。
+
+建议帧率: idle 6 fps，run 10 fps。
